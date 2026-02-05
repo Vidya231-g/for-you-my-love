@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Love Ganesh ❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff6a88, #ff99ac);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 18px;
+      animation: floatUp 10s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      padding: 90px 20px 60px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 30px;
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      padding: 40px 35px;
+      border-radius: 30px;
+      max-width: 760px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.8;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .divider {
+      margin: 25px auto;
+      font-size: 22px;
+      opacity: 0.8;
+    }
+
+    .love-btn {
+      margin-top: 45px;
+      background: linear-gradient(45deg, #fff, #ffe0e8);
+      color: #ff4f81;
+      border: none;
+      padding: 16px 38px;
+      font-size: 18px;
+      border-radius: 35px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .love-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      color: #ff4f81;
+      border: none;
+      padding: 10px 18px;
+      font-size: 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+      z-index: 5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating hearts -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (6 + Math.random() * 6) + "s";
+      heart.style.fontSize = (14 + Math.random() * 20) + "px";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="container">
+    <h1>To Ganesh 💕</h1>
+
+    <div class="message-box">
+      <p>
+        My Love, four years with you feels like a beautiful dream I never want to wake up from.
+      </p>
+
+      <div class="divider">💖 💖 💖</div>
+
+      <p>
+        Ellam nethi arambicha maari iruku, but enga kondu vanthu niruthirukom paathiya and more to go with you ma.
+        Neraiya love pannuvom, neraiya sanda poduvom, neraiya sorry ketpom innum neraiya neraiya.
+      </p>
+
+      <div class="divider">💫</div>
+
+      <p>
+        Here I am, waiting eagerly to start another new chapter with you.
+      </p>
+
+      <p>
+        Thank you for loving me, supporting me, and choosing me every single day, even after all my silly behaviours.
+      </p>
+
+      <div class="divider">💞</div>
+
+      <p>
+        You are my happiness, my comfort, my forever.
+        And I promise, I will make you feel safe and make you the happiest man for the rest of your life.
+        Love you ma ❤️
+      </p>
+
+      <p>
+        Happy Valentine’s Day and Happy 4th Year Love Anniversary ❤️
+      </p>
+
+      <p>
+        Always yours 💖 <br> VidyaGanesh
+      </p>
+    </div>
+
+    <button class="love-btn" onclick="goToHistory()">See Our Beautiful Journey 💞</button>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="music/Enthara-Enthara.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+  <script>
+    const audio = document.getElementById("bgMusic");
+    const fromPage = sessionStorage.getItem("fromPage");
+
+    setTimeout(() => {
+      if (fromPage === "index") audio.currentTime = 0;
+      if (fromPage === "history") {
+        const savedTime = sessionStorage.getItem("musicTime");
+        if (savedTime) audio.currentTime = savedTime;
+      }
+      audio.play().catch(() => {});
+    }, 5000);
+
+    audio.addEventListener("timeupdate", () => {
+      sessionStorage.setItem("musicTime", audio.currentTime);
+    });
+
+    function goToHistory() {
+      sessionStorage.setItem("fromPage", "love");
+      window.location.href = "history.html";
+    }
+
+    function goBack() {
+      sessionStorage.setItem("fromPage", "index");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
