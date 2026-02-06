@@ -125,6 +125,11 @@
     .next-btn:hover {
       transform: scale(1.08);
     }
+	
+	.photo {
+  transition: opacity 0.4s ease-in-out;
+}
+
 
     .back-btn {
       position: fixed;
@@ -140,7 +145,31 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.25);
       z-index: 5;
     }
+	
+	  /* 📱 Mobile full-size enhancement */
+@media (max-width: 768px) {
+  .frame {
+    width: 95%;
+    padding: 16px;
+    border-radius: 26px;
+  }
+
+  .photo {
+    height: 70vh;      /* makes image BIG */
+    border-radius: 22px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+}
   </style>
+
 </head>
 
 <body>
@@ -202,14 +231,22 @@
   const textEl = document.getElementById("pageText");
 
   function nextPhoto() {
-    index = (index + 1) % photos.length;
-    photoEl.style.opacity = 0;
+    const nextIndex = (index + 1) % photos.length;
+    const tempImg = new Image();
 
-    setTimeout(() => {
-      photoEl.src = photos[index];
-      textEl.innerText = `Page ${index + 1} of our forever 💙`;
-      photoEl.style.opacity = 1;
-    }, 300);
+    tempImg.src = photos[nextIndex];
+
+    // Wait until image is fully loaded
+    tempImg.onload = () => {
+      photoEl.style.opacity = 0;
+
+      setTimeout(() => {
+        index = nextIndex;
+        photoEl.src = tempImg.src;
+        textEl.innerText = `Page ${index + 1} of our forever 💙`;
+        photoEl.style.opacity = 1;
+      }, 200);
+	  };
   }
 
   // Music persistence
