@@ -210,6 +210,10 @@
   </div>
 
   <button class="next-btn" onclick="nextPhoto()">Next Memory 💫</button>
+  
+  <button class="next-btn" onclick="window.location.href='video.html'">
+  Watch Our Love Story 🎥
+</button>
 </div>
 
 <audio id="bgMusic" loop>
@@ -230,13 +234,14 @@
   const photoEl = document.getElementById("photo");
   const textEl = document.getElementById("pageText");
 
-  function nextPhoto() {
-    const nextIndex = (index + 1) % photos.length;
-    const tempImg = new Image();
+function nextPhoto() {
+  const nextIndex = index + 1;
 
+  if (nextIndex < photos.length) {
+
+    const tempImg = new Image();
     tempImg.src = photos[nextIndex];
 
-    // Wait until image is fully loaded
     tempImg.onload = () => {
       photoEl.style.opacity = 0;
 
@@ -245,14 +250,27 @@
         photoEl.src = tempImg.src;
         textEl.innerText = `Page ${index + 1} of our forever 💙`;
         photoEl.style.opacity = 1;
+
+        // Show button ONLY on last image
+        if (index === photos.length - 1) {
+          document.getElementById("watchBtn").style.display = "inline-block";
+        } else {
+          document.getElementById("watchBtn").style.display = "none";
+        }
+
       }, 200);
-	  };
+    };
+
   }
+}
+
 
   // Music persistence
-  const audio = document.getElementById("bgMusic");
+const audio = document.getElementById("bgMusic");
+
   const savedTime = sessionStorage.getItem("musicTime");
   if (savedTime) audio.currentTime = savedTime;
+
   audio.play().catch(()=>{});
 
   audio.addEventListener("timeupdate", () => {
@@ -264,6 +282,7 @@
     window.location.href = "love.html";
   }
 </script>
+
 
 </body>
 </html>

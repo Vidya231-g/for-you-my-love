@@ -141,6 +141,7 @@
       <div class="divider">💖 💖 💖</div>
 
       <p>
+		First of all, Sorry for everything Ganesh. Not even a bit of perfect girl I'am, still you choose me over everything. 
         Ellam nethi arambicha maari iruku, but enga kondu vanthu niruthirukom paathiya and more to go with you ma.
         Neraiya love pannuvom, neraiya sanda poduvom, neraiya sorry ketpom innum neraiya neraiya.
       </p>
@@ -181,33 +182,39 @@
 
   <button class="back-btn" onclick="goBack()">⬅ Back</button>
 
-  <script>
-    const audio = document.getElementById("bgMusic");
-    const fromPage = sessionStorage.getItem("fromPage");
+<script>
+  const audio = document.getElementById("bgMusic");
+  const fromPage = sessionStorage.getItem("fromPage");
 
+  // Only delay music when coming from index page
+  if (fromPage === "index") {
     setTimeout(() => {
-      if (fromPage === "index") audio.currentTime = 0;
-      if (fromPage === "history") {
-        const savedTime = sessionStorage.getItem("musicTime");
-        if (savedTime) audio.currentTime = savedTime;
-      }
+      audio.currentTime = 0;
       audio.play().catch(() => {});
     }, 5000);
+  } else {
+    // Coming from history — continue instantly
+    const savedTime = sessionStorage.getItem("musicTime");
+    if (savedTime) audio.currentTime = savedTime;
+    audio.play().catch(() => {});
+  }
 
-    audio.addEventListener("timeupdate", () => {
-      sessionStorage.setItem("musicTime", audio.currentTime);
-    });
+  // Save music time continuously
+  audio.addEventListener("timeupdate", () => {
+    sessionStorage.setItem("musicTime", audio.currentTime);
+  });
 
-    function goToHistory() {
-      sessionStorage.setItem("fromPage", "love");
-      window.location.href = "history.html";
-    }
+  function goToHistory() {
+    sessionStorage.setItem("fromPage", "love");
+    window.location.href = "history.html";
+  }
 
-    function goBack() {
-      sessionStorage.setItem("fromPage", "index");
-      window.location.href = "index.html";
-    }
-  </script>
+  function goBack() {
+    sessionStorage.setItem("fromPage", "index");
+    window.location.href = "index.html";
+  }
+</script>
+
 
 </body>
 </html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Our Love Story 🎥</title>
+
+<style>
+body{
+  margin:0;
+  background: linear-gradient(135deg,#ff9ec4,#ffcce0,#ffe6f2);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+  color:#fff;
+  text-align:center;
+}
+
+/* Floating hearts background */
+.heart-bg{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:floatUp 12s linear infinite;
+  opacity:0.5;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:0.8;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+
+.story-box{
+  width:90%;
+  max-width:650px;
+  padding:50px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(18px);
+  border-radius:35px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.4);
+  animation:fade 1.5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:scale(0.9);}
+  to{opacity:1; transform:scale(1);}
+}
+
+h1{
+  font-size:34px;
+  margin-bottom:15px;
+}
+
+p{
+  font-size:19px;
+  line-height:1.8;
+  min-height:90px;
+}
+
+.heart{
+  font-size:45px;
+  margin-top:15px;
+  animation:beat 1.5s infinite;
+}
+
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.25);}
+  100%{transform:scale(1);}
+}
+
+/* Navigation buttons */
+.controls{
+  margin-top:25px;
+}
+
+.btn{
+  background:white;
+  color:#ff4f81;
+  border:none;
+  padding:12px 28px;
+  margin:8px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.1);
+}
+
+/* Back button */
+.back-btn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:white;
+  color:#ff4f81;
+  border:none;
+  padding:10px 18px;
+  border-radius:25px;
+  cursor:pointer;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating Hearts -->
+<script>
+for(let i=0;i<20;i++){
+  const h=document.createElement("div");
+  h.className="heart-bg";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(8+Math.random()*6)+"s";
+  h.style.fontSize=(16+Math.random()*20)+"px";
+  document.body.appendChild(h);
+}
+</script>
+
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+<div class="story-box">
+  <h1 id="title">A Boy Met A Girl 💕</h1>
+  <p id="text">One random day... destiny decided to write a love story.</p>
+  <div class="heart">❤️</div>
+
+  <div class="controls">
+    <button class="btn" onclick="prevScene()">◀ Previous</button>
+    <button class="btn" onclick="nextScene()">Next ▶</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="music/Enthara-Enthara.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const scenes=[
+{
+title:"A Boy Met A Girl 💕",
+text:"One random day... destiny decided to write a beautiful love story."
+},
+{
+title:"From Strangers to Best Friends ✨",
+text:"They laughed, talked for hours, and slowly became each other's comfort."
+},
+{
+title:"Fights & Sorry's 💫",
+text:"There were more and more fights... but love was always stronger than ego."
+},
+{
+title:"Growing Together 🌸",
+text:"Four magical years filled with memories, dreams and endless love."
+},
+{
+title:"Forever Begins 💍",
+text:"And this is only the beginning of their forever..."
+},
+{
+title:"Ganesh ❤️ Vidya",
+text:"No matter what happens... always choose each other."
+}
+];
+
+let index=0;
+const title=document.getElementById("title");
+const text=document.getElementById("text");
+
+function showScene(){
+  title.style.opacity=0;
+  text.style.opacity=0;
+
+  setTimeout(()=>{
+    title.innerText=scenes[index].title;
+    text.innerText=scenes[index].text;
+    title.style.opacity=1;
+    text.style.opacity=1;
+  },400);
+}
+
+function nextScene(){
+  if(index<scenes.length-1){
+    index++;
+    showScene();
+  }
+}
+
+function prevScene(){
+  if(index>0){
+    index--;
+    showScene();
+  }
+}
+
+/* 🎵 MUSIC CONTINUE (NOT restart) */
+const audio=document.getElementById("music");
+const savedTime=sessionStorage.getItem("musicTime");
+
+if(savedTime){
+  audio.currentTime=savedTime;
+}
+
+audio.play().catch(()=>{});
+
+audio.addEventListener("timeupdate",()=>{
+  sessionStorage.setItem("musicTime",audio.currentTime);
+});
+
+function goBack(){
+  sessionStorage.setItem("fromPage","video");
+  window.location.href="history.html";
+}
+</script>
+
+</body>
+</html>
